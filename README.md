@@ -12,7 +12,7 @@ const SilverGrid({
 
 ````
 
-## [SliverChildDelegate] (https://api.flutter.dev/flutter/widgets/SliverChildDelegate-class.html)
+## [SliverChildDelegate](https://api.flutter.dev/flutter/widgets/SliverChildDelegate-class.html)
 
 • A delegate that supplies children for slivers.
 
