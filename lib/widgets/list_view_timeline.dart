@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:scrolling_timeline/models/buoy_event.dart';
 import 'package:scrolling_timeline/models/volume.dart';
-import 'package:scrolling_timeline/widgets/color_container.dart';
 
 class ListViewTimeline extends StatefulWidget {
   @override

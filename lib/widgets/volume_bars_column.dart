@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../models/buoy_event.dart';
-import 'color_container.dart';
+import 'volume_bar.dart';
 
-class VolumeBars extends StatelessWidget {
+class VolumeBarsColumn extends StatelessWidget {
   final List<BuoyEvent> events;
   final double maxVolume;
 
-  VolumeBars({this.events, this.maxVolume});
+  VolumeBarsColumn({this.events, this.maxVolume});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,15 @@ class VolumeBars extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           for (final event in events)
-            ColorContainer(
-              color: Color(0XFF2F71B3),
-              title: event.volume.value.round().toString(),
+            // GestureDetector(
+            //   onTap: () {
+            //     print('Event Time = ${event.start}');
+            //   },
+            VolumeBar(
+              volume: event.volume.value.round().toString(),
               widthRatio: event.volume.value / maxVolume,
-            )
+            ),
+          //),
         ],
       ),
     );

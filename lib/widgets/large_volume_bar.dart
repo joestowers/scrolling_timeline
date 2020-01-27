@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
 
-class ColorContainer extends StatelessWidget {
-  final Color color;
-  final String title;
+class LargeVolumeBar extends StatelessWidget {
   final double widthRatio;
+  final String volume;
 
-  ColorContainer({this.color, this.title, this.widthRatio});
+  LargeVolumeBar({this.widthRatio, this.volume});
 
   @override
   Widget build(BuildContext context) {
-    //String volumeLabel = title + ' gal';
-
-    return Container(
-      color: color,
-      height: 38.0,
-      width: widthRatio * 300.0,
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 6.0),
       child: Row(
         children: <Widget>[
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 24.0, maxWidth: 24.0),
             child: Placeholder(
-              fallbackHeight: 10.0,
+              color: Colors.white,
+              fallbackHeight: 20.0,
               fallbackWidth: 20.0,
             ),
           ),
           Expanded(
             child: Align(
               alignment: Alignment.centerRight,
-              child: Text(
-                title,
-                style: TextStyle(fontSize: 16.0, color: Colors.white),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                child: Text(
+                  volume,
+                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

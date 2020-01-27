@@ -7,7 +7,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../models/buoy_event.dart';
 import '../models/volume.dart';
 import '../utils/group_sort_utils.dart';
-import 'volume_bars.dart';
+import 'volume_bars_column.dart';
 
 class ListViewTimeIncrement extends StatefulWidget {
   @override
@@ -31,8 +31,12 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
     // mimic a call to get events here
     final List<BuoyEvent> buoyEvents = [
       BuoyEvent(
+          start: DateTime(2019, 1, 20, 5, 6, 30),
+          volume: Volume(value: 74.7),
+          category: BuoyCategory.gardenHose),
+      BuoyEvent(
           start: DateTime(2019, 1, 20, 5, 18, 15),
-          volume: Volume(value: 3.2),
+          volume: Volume(value: 3.4),
           category: BuoyCategory.toilet),
       BuoyEvent(
           start: DateTime(2019, 1, 20, 12, 35, 27),
@@ -44,7 +48,7 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
           category: BuoyCategory.bath),
       BuoyEvent(
           start: DateTime(2019, 1, 20, 12, 17, 30),
-          volume: Volume(value: 24.1),
+          volume: Volume(value: 17.0),
           category: BuoyCategory.sink),
       BuoyEvent(
           start: DateTime(2019, 1, 20, 12, 35, 15),
@@ -58,8 +62,8 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
 
     eventsGroupedByHour = buoyEvents.groupedSortedListBy(
       groupByKey: (event) => event.start.hour,
-      groupSort: (int lhs, int rhs) => rhs.compareTo(lhs),
-      elementSort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
+      groupSort: (int lhs, int rhs) => lhs.compareTo(rhs),
+      elementSort: (lhs, rhs) => lhs.start.compareTo(rhs.start),
     );
 
     maxVolume = getMaxVolume(buoyEvents);
@@ -127,7 +131,7 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
               ),
               if (eventsForHour != null)
                 Expanded(
-                  child: VolumeBars(
+                  child: VolumeBarsColumn(
                     events: eventsForHour,
                     maxVolume: maxVolume,
                   ),
