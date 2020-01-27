@@ -1,13 +1,13 @@
 import 'dart:collection';
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import 'package:flutter/material.dart';
-import 'package:scrolling_timeline/models/buoy_event.dart';
-import 'package:scrolling_timeline/models/volume.dart';
-import 'package:scrolling_timeline/utils/group_sort_utils.dart';
-import 'package:scrolling_timeline/widgets/color_container.dart';
+import '../models/buoy_event.dart';
+import '../models/volume.dart';
+import '../utils/group_sort_utils.dart';
+import 'volume_bars.dart';
 
 class ListViewTimeIncrement extends StatefulWidget {
   @override
@@ -72,7 +72,7 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
       return 0.0;
     } else {
       return events.fold(
-          0, (previous, event) => math.max(previous, event.volume.value));
+          0.0, (previous, event) => math.max(previous, event.volume.value));
     }
   }
 
@@ -87,8 +87,6 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
       dateTimeIncrementList.add(current);
       current = current.add(Duration(minutes: 60));
     }
-
-    print(dateTimeIncrementList);
   }
 
   String formatTime(DateTime time) {
@@ -105,62 +103,39 @@ class _ListViewTimeIncrementState extends State<ListViewTimeIncrement> {
       itemBuilder: (_, index) {
         final date = dateTimeIncrementList[index];
         final hour = date.hour;
-
         final eventsForHour = eventsGroupedByHour[hour];
 
         return Container(
           decoration: BoxDecoration(
-              border:
-                  Border(bottom: BorderSide(color: Colors.grey, width: 1.0))),
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 1.0,
+              ),
+            ),
+          ),
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(width: 72, child: Text(formatTime(date))),
+              Container(
+                height: 36.0,
+                width: 72.0,
+                child: Text(
+                  formatTime(date),
+                ),
+              ),
               if (eventsForHour != null)
                 Expanded(
-                    child: _VolumeBarWidgets(
-                        events: eventsForHour, maxVolume: maxVolume))
-              else
-                Container(height: 36)
+                  child: VolumeBars(
+                    events: eventsForHour,
+                    maxVolume: maxVolume,
+                  ),
+                )
             ],
           ),
         );
       },
     );
-  }
-}
-
-class _VolumeBarWidgets extends StatelessWidget {
-  final List<BuoyEvent> events;
-  final double maxVolume;
-
-  _VolumeBarWidgets({this.events, this.maxVolume});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        for (final event in events)
-          ColorContainer(
-            color: Color(0XFF2F71B3),
-            title: event.volume.value.toString(),
-            widthRatio: event.volume.value / maxVolume,
-          )
-      ],
-    );
-    // return ListView.builder(
-    //   itemCount: events.length,
-    //   itemBuilder: (_, index) {
-    //     final eventVolume = events[index].volume.value;
-    //     return ColorContainer(
-    //       color: Color(0XFF2F71B3),
-    //       title: eventVolume.toString(),
-    //       widthRatio: eventVolume / maxVolume,
-    //     );
-    //   },
-    // );
   }
 }

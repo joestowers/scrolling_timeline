@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scrolling_timeline/widgets/sliver_grid_timeline.dart';
 
 import 'list_view_time_increment.dart';
-import 'list_view_timeline.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);

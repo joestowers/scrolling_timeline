@@ -9,22 +9,32 @@ class ColorContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('widthRatio = $widthRatio');
-
-    String volumeLabel = title + ' gal';
+    //String volumeLabel = title + ' gal';
 
     return Container(
       color: color,
       height: 38.0,
       width: widthRatio * 300.0,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          volumeLabel,
-          textAlign: TextAlign.left,
-          style: TextStyle(fontSize: 16.0, color: Colors.white),
-        ),
+      child: Row(
+        children: <Widget>[
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 24.0, maxWidth: 24.0),
+            child: Placeholder(
+              fallbackHeight: 10.0,
+              fallbackWidth: 20.0,
+            ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 16.0, color: Colors.white),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
